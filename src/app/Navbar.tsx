@@ -1,13 +1,33 @@
-"use client"
-import Link from "next/link"
+"use client";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 export default function Navbar() {
-  return (
-    <div className="w-[90%] mx-auto flex items-center justify-center bg-yellow-100 py-4 m-2 text-sm">
-        <ul className="mx-auto flex gap-5">
-            <Link href='/about'>About</Link>
-            <Link href='/products'>Product</Link>
-            <Link href='/contact'>Contact</Link>
-        </ul>
-    </div>
-  )
+	const links = [
+		{ href: "/about", text: "About" },
+		{ href: "/products", text: "Products" },
+		{ href: "/contact", text: "Contact" },
+	];
+	const path = usePathname();
+	return (
+		<div className="container mx-auto">
+			<nav className="navbar bg-yellow-100 text-gray-800 mb-5">
+				<ul className="flex justify-center py-5  rounded-sm">
+					{links.map((l) => (
+						<li className="pr-[2.5rem]" key={l.href}>
+							<motion.div whileHover={{ scale: 1.1 }}>
+								<Link
+									className={`${
+										l.href === path ? "text-yellow-600 font-bold" : ""
+									} text-base`}
+									href={l.href}>
+									{l.text}
+								</Link>
+							</motion.div>
+						</li>
+					))}
+				</ul>
+			</nav>
+		</div>
+	);
 }
